@@ -167,6 +167,15 @@ function createTestData() {
 // 서버리스 함수 핸들러
 // req: HTTP 요청 객체, res: HTTP 응답 객체
 export default function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+  
   // GET 요청만 허용하도록 분기 처리
   if (req.method !== 'GET') {
     res.status(405).json({ error: 'Method Not Allowed' });
