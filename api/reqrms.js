@@ -15,7 +15,7 @@ function convertKeysToCamelCase(data) {
 }
 
 function toCamelCase(s) {
-  return s.replace(/(_\w)/g, match => match[1].toUpperCase());
+  return s.toLowerCase().replace(/_([a-z])/g, (m, p1) => p1.toUpperCase());
 }
 
 // 모델 정보를 기반으로 테스트 데이터를 생성하는 함수
