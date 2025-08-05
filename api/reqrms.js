@@ -187,8 +187,5 @@ export default function handler(req, res) {
 
   // JSON 형태로 응답 반환
   // 상태 코드 200 (OK)와 함께 데이터를 전송
-  res.status(200).json({
-    message: 'Test data loaded successfully.',
-    data: testData,
-  });
+  res.status(200).json(testData);
 }
