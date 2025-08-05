@@ -1,5 +1,23 @@
 // api/reqrms.js
 
+function convertKeysToCamelCase(data) {
+  if (Array.isArray(data)) {
+    return data.map(item => convertKeysToCamelCase(item));
+  } else if (typeof data === 'object' && data !== null) {
+    return Object.entries(data).reduce((acc, [key, value]) => {
+      const camelKey = toCamelCase(key);
+      acc[camelKey] = convertKeysToCamelCase(value);
+      return acc;
+    }, {});
+  } else {
+    return data;
+  }
+}
+
+function toCamelCase(s) {
+  return s.replace(/(_\w)/g, match => match[1].toUpperCase());
+}
+
 // 모델 정보를 기반으로 테스트 데이터를 생성하는 함수
 function createTestData() {
   return [
@@ -187,5 +205,5 @@ export default function handler(req, res) {
 
   // JSON 형태로 응답 반환
   // 상태 코드 200 (OK)와 함께 데이터를 전송
-  res.status(200).json(testData);
+  res.status(200).json(convertKeysToCamelCase(testData));
 }
